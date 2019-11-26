@@ -14,12 +14,16 @@ export class HelperService {
  * @returns {Headers}
  */
   static getHttpHeaders(uploadFile: boolean = false): HttpHeaders {
-    const headers = new HttpHeaders();
 
-    if (!uploadFile) {
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-    }
+    // option 1
+    // headers = headers.set('Accept', 'application/json').set('Content-Type','application/json');
+
+    //option 2
+    const headers = new HttpHeaders( {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    } );
+
     return headers;
   }
 

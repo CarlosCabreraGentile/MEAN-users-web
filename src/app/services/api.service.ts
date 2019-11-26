@@ -59,7 +59,7 @@ httpPost(endpoint, dataPost, uploadFile = false): Observable<any> {
 
   this.http.post(this.baseUrl + endpoint, json, { headers: HelperService.getHttpHeaders() })
     .pipe(
-      map((response: any) => response.json()),
+      map(res => res),
       catchError(this.handleError)
     )
     .subscribe(

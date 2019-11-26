@@ -3,14 +3,82 @@
     <div class="col s5">
       <div class="card">
         <div class="card-content">
-          <form #userForm="ngForm" (ngSubmit)="addUser(userForm)">
-
+          <form [formGroup]="form" (ngSubmit)="onSave()">
+            <div class="row">
+              <div class="input-field col s12">
+                <input
+                  formControlName="position"
+                  type="text"
+                  class="form-control"
+                  [class.invalid]="!form.controls.position.valid && form.controls.position.touched"
+                  placeholder="Position"
+                />
+                form.controls.position.errors {{ getForm() }}
+                <div *ngIf="form.controls.position.errors && (form.controls.position.touched || form.controls.position.dirty)" class="invalid">
+                    <div *ngIf="form.controls.position.errors.required">
+                      <span class="helper-text invalid" data-error="Incomplete field" data-success="">Field required</span>
+                    </div>
+                    <div *ngIf="form.controls.position.errors.minlength">
+                        <span class="helper-text invalid" data-error="Incorrect email" data-success="" >Minimun 4 characters</span>
+                    </div>
+                    <div *ngIf="form.controls.position.errors.maxlength">
+                      <span class="helper-text invalid" data-error="Maximum 10 characters" data-success="">Maximum 10 characters</span>
+                    </div>
+                  </div>
+              </div>
+              <div class="input-field col s12">
+                <input
+                formControlName="office"
+                type="text"
+                class="form-control"
+                placeholder="Office"
+                />
+              </div>
+              <div class="input-field col s12">
+                <input
+                formControlName="salary"
+                type="text"
+                class="form-control"
+                placeholder="Salary"
+                />
+              </div>
+              <div class="input-field col s12">
+                <input
+                formControlName="email"
+                type="email"
+                class="form-control validate"
+                placeholder="Email"
+                  />
+                  <div *ngIf="form.controls.email.errors && (form.controls.email.touched || form.controls.email.dirty)"></div>
+                  <span class="helper-text" data-error="Incorrect email" data-success=""></span>
+                </div>
+                <div class="input-field col s12">
+                  <input
+                  formControlName="firstName"
+                  type="text"
+                  class="form-control"
+                  placeholder="First Name"
+                />
+              </div>
+              <div class="input-field col s12">
+                <input
+                formControlName="lastName"
+                type="text"
+                class="form-control"
+                placeholder="Last Name"
+                />
+              </div>
+              <div class="card-action">
+                <div class="input-field col s12">
+                  <button type="button" class="btn right" style="margin-left: 2px;" [disabled]="!form.valid">Save</button>
+                  <button type="button" class="btn right">Clean</button>
+                </div>
+              </div>
+            </div>
           </form>
         </div>
       </div>
     </div>
-    <div class="col s7">
-
-    </div>
+    <div class="col s7"></div>
   </div>
 </div>

@@ -38,7 +38,7 @@ export class UserService {
    * Get a specific users from API
    * @returns {Observable<Users>}
    */
-  public getUser(id: number): Observable<Users[]> {
+  public getUser(id: string): Observable<Users> {
     const subject = new Subject<any>();
     this.apiService.httpGet(`/user/${id}`)
     // Create a subscribe because you can manipulate the data, otherwise its not necessary to subscribe
@@ -71,7 +71,7 @@ export class UserService {
    * @param user
    * @returns {Observable<Users>}
    */
-  public putUser(id: number, user: Users): Observable<Users> {
+  public putUser(id: string, user: Users): Observable<Users> {
     return this.apiService.httpPut(`/user/${id}`, user);
   }
 
