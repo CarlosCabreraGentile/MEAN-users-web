@@ -10,11 +10,13 @@ import { UsersComponent } from './components/users/users.component';
 import { ApiService } from './services/api.service';
 import { UserService } from './services/user.service';
 import { HelperService } from './services/helper.service';
+import { JustNumberDirective } from './shared/just-number.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent
+    UsersComponent,
+    JustNumberDirective
   ],
   imports: [
     BrowserModule,

@@ -10,20 +10,18 @@
                   formControlName="position"
                   type="text"
                   class="form-control"
-                  [class.invalid]="!form.controls.position.valid && form.controls.position.touched"
+                  [class.invalid]="!form.get('position').valid && form.get('position').touched"
                   placeholder="Position"
                 />
                 form.controls.position.errors {{ getForm() }}
-                <div *ngIf="form.controls.position.errors && (form.controls.position.touched || form.controls.position.dirty)" class="invalid">
-                    <div *ngIf="form.controls.position.errors.required">
-                      <span class="helper-text invalid" data-error="Incomplete field" data-success="">Field required</span>
-                    </div>
-                    <div *ngIf="form.controls.position.errors.minlength">
-                        <span class="helper-text invalid" data-error="Incorrect email" data-success="" >Minimun 4 characters</span>
-                    </div>
-                    <div *ngIf="form.controls.position.errors.maxlength">
-                      <span class="helper-text invalid" data-error="Maximum 10 characters" data-success="">Maximum 10 characters</span>
-                    </div>
+                  <div *ngIf="isDisplayError('position', 'required')">
+                    <p class="invalid">Field required</p>
+                  </div>
+                  <div *ngIf="isDisplayError('position', 'minlength')">
+                      <p class="invalid">Minimun 4 characters</p>
+                  </div>
+                  <div *ngIf="isDisplayError('position', 'maxlength')">
+                    <p class="invalid">Maximum 10 characters</p>
                   </div>
               </div>
               <div class="input-field col s12">
@@ -32,15 +30,33 @@
                 type="text"
                 class="form-control"
                 placeholder="Office"
+                [class.invalid]="!form.get('office').valid && form.get('office').touched"
                 />
+                  <div *ngIf="isDisplayError('office', 'required')">
+                    <p class="invalid">Field required</p>
+                  </div>
+                  <div *ngIf="isDisplayError('office', 'maxlength')">
+                    <p class="invalid">Maximum 20 characters</p>
+                  </div>
               </div>
               <div class="input-field col s12">
                 <input
+                [appJustNumber]="true"
                 formControlName="salary"
                 type="text"
                 class="form-control"
                 placeholder="Salary"
+                [class.invalid]="!form.get('salary').valid && form.get('salary').touched"
                 />
+                  <div *ngIf="isDisplayError('salary', 'required')">
+                    <p class="invalid">Field required</p>
+                  </div>
+                  <div *ngIf="isDisplayError('salary', 'pattern')">
+                    <p class="invalid">Wrong numbers</p>
+                  </div>
+                  <div *ngIf="isDisplayError('salary', 'maxlength')">
+                    <p class="invalid">Maximum 4 digits</p>
+                  </div>
               </div>
               <div class="input-field col s12">
                 <input
@@ -48,25 +64,44 @@
                 type="email"
                 class="form-control validate"
                 placeholder="Email"
-                  />
-                  <div *ngIf="form.controls.email.errors && (form.controls.email.touched || form.controls.email.dirty)"></div>
-                  <span class="helper-text" data-error="Incorrect email" data-success=""></span>
-                </div>
+                [class.invalid]="!form.get('email').valid && form.get('email').touched"
+                />
+                  <div *ngIf="isDisplayError('email', 'required')">
+                    <p class="invalid">Field required</p>
+                  </div>
+                  <div *ngIf="isDisplayError('email', 'maxlength')">
+                    <p class="invalid">Maximum 20 characters</p>
+                  </div>
+              </div>
                 <div class="input-field col s12">
                   <input
-                  formControlName="firstName"
-                  type="text"
-                  class="form-control"
-                  placeholder="First Name"
-                />
+                    formControlName="firstName"
+                    type="text"
+                    class="form-control"
+                    placeholder="First Name"
+                    [class.invalid]="!form.get('firstName').valid && form.get('firstName').touched"
+                  />
+                  <div *ngIf="isDisplayError('firstName', 'required')">
+                    <p class="invalid">Field required</p>
+                  </div>
+                  <div *ngIf="isDisplayError('firstName', 'maxlength')">
+                    <p class="invalid">Maximum 20 characters</p>
+                  </div>
               </div>
               <div class="input-field col s12">
                 <input
-                formControlName="lastName"
-                type="text"
-                class="form-control"
-                placeholder="Last Name"
+                  formControlName="lastName"
+                  type="text"
+                  class="form-control"
+                  placeholder="Last Name"
+                  [class.invalid]="!form.get('lastName').valid && form.get('lastName').touched"
                 />
+                <div *ngIf="isDisplayError('lastName', 'required')">
+                  <p class="invalid">Field required</p>
+                </div>
+                <div *ngIf="isDisplayError('lastName', 'maxlength')">
+                  <p class="invalid">Maximum 20 characters</p>
+                </div>
               </div>
               <div class="card-action">
                 <div class="input-field col s12">

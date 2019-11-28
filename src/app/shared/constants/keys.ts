@@ -1,0 +1,9 @@
+export const ENTER = 'Enter';
+export const BACKSPACE = 'Backspace';
+export const ARROWRIGHT = 'ArrowRight';
+export const ARROWUP = 'ArrowUp';
+export const ARROWLEFT = 'ArrowLeft';
+export const ARROWDOWN = 'ArrowDown';
+export const TAB = 'Tab';
+export const DOT = '.';
+export const SUBSTRACT = '-';
