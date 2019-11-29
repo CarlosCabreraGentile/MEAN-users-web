@@ -1,19 +1,34 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
+import * as KEYS from './constants/keys';
+
+const specialsKeys = [
+  KEYS.ARROWLEFT,
+  KEYS.ARROWUP,
+  KEYS.ARROWRIGHT,
+  KEYS.ARROWDOWN,
+  KEYS.ENTER,
+  KEYS.TAB,
+  KEYS.BACKSPACE
+];
+
 @Directive({
   selector: '[appJustNumber]'
 })
 export class JustNumberDirective {
 
   regexStr = '^[0-9]*$';
+  private key: string;
 
   constructor(private el: ElementRef) { }
 
   @Input() appJustNumber: boolean;
 
-  @HostListener('keydown', ['$event']) onKeyDown(event) {
-    let e = <KeyboardEvent> event;
-    if (this.appJustNumber) {
+  @HostListener('keydown', ['$event'])
+    onKeyDown({ key }: KeyboardEvent) {
+      this.key = key;
+      const e = <KeyboardEvent> event;
+      if (this.appJustNumber) {
       if ([46, 8, 9, 27, 13, 110].indexOf(e.keyCode) !== -1 ||
       // Allow: Numpad 0
       (e.code === 'Numpad0') ||
@@ -36,26 +51,26 @@ export class JustNumberDirective {
       // Allow: Numpad 9
       (e.code === 'Numpad9') ||
       // Allow: Ctrl+A
-      (e.keyCode == 65 && e.ctrlKey === true) ||
+      (this.key === 'KeyA' && e.ctrlKey === true) ||
       // Allow: Ctrl+C
-      (e.keyCode == 67 && e.ctrlKey === true) ||
+      (this.key === 'KeyC' && e.ctrlKey === true) ||
       // Allow: Ctrl+V
-      (e.keyCode == 86 && e.ctrlKey === true) ||
+      (this.key === 'KeyV' && e.ctrlKey === true) ||
       // Allow: Ctrl+X
-      (e.keyCode == 88 && e.ctrlKey === true) ||
+      (this.key === 'KeyX' && e.ctrlKey === true) ||
       // Allow: home, end, left, right
       (e.keyCode >= 35 && e.keyCode <= 39)) {
         // let it happen, don't do anything
         return;
       }
-    let ch = String.fromCharCode(e.keyCode);
-    let regEx =  new RegExp(this.regexStr);
-    if(regEx.test(ch))
-      return;
-    else
+      let ch = String.fromCharCode(e.keyCode);
+      let regEx =  new RegExp(this.regexStr);
+      if (regEx.test(ch)) {
+        return;
+      } else {
         e.preventDefault();
+      }
     }
-
   }
 
 }

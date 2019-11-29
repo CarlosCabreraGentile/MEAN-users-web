@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef  } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserService } from '../../services/user.service';
@@ -71,23 +71,23 @@ export class UsersComponent implements OnInit {
       ],
       salary: [
         this.user.salary || '',
-        Validators.compose([Validators.required, Validators.pattern(this.regex), NumberValidatorService.isNumber(4)])
+        Validators.compose([Validators.required, Validators.pattern(this.regex), NumberValidatorService.isNumber(6)])
       ],
       email: [
         this.user.email || '',
         Validators.compose([
           Validators.required,
           Validators.email,
-          Validators.maxLength(20)
+          Validators.maxLength(10)
         ])
       ],
       firstName: [
         this.user.firstName || '',
-        Validators.compose([Validators.required, Validators.maxLength(20)])
+        Validators.compose([Validators.required, Validators.maxLength(10)])
       ],
       lastName: [
         this.user.lastName || '',
-        Validators.compose([Validators.required, Validators.maxLength(20)])
+        Validators.compose([Validators.required, Validators.maxLength(10)])
       ]
     });
     console.log(this.form);
@@ -119,15 +119,19 @@ export class UsersComponent implements OnInit {
   onSave(): void {
     // If there is not an id, create a new player
     if (!this.id) {
-      this.createUser().subscribe(() => {
-        this.form.reset();
-        // this.router.navigate(['home']);
+      this.createUser()
+      .subscribe(
+        () => {
+          this.form.reset();
+          // this.router.navigate(['home']);
       });
     } else {
       // If a there is an id, edit user
-      this.editUser().subscribe(() => {
-        this.form.reset();
-        // this.router.navigate(['home']);
+      this.editUser()
+      .subscribe(
+        () => {
+          this.form.reset();
+          // this.router.navigate(['home']);
       });
     }
   }
@@ -138,10 +142,13 @@ export class UsersComponent implements OnInit {
    */
   private createUser(): Observable<void> {
     const subject = new Subject<any>();
-    this.userService.postUser(this.form.value).subscribe(
-      () => subject.next(),
-      error => subject.error(error),
-      () => subject.complete()
+    this.userService.postUser(this.form.value)
+      .subscribe((data) => {
+        subject.next(data);
+        console.log(data);
+        },
+        error => subject.error(error),
+        () => subject.complete()
     );
     return subject.asObservable();
   }
@@ -152,11 +159,19 @@ export class UsersComponent implements OnInit {
    */
   private editUser(): Observable<void> {
     const subject = new Subject<any>();
-    this.userService.putUser(this.id, this.form.value).subscribe(
-      () => subject.next(),
-      error => subject.error(error),
-      () => subject.complete()
+    this.userService.putUser(this.id, this.form.value)
+      .subscribe(
+        () => subject.next(),
+        error => subject.error(error),
+        () => subject.complete()
     );
     return subject.asObservable();
   }
+
+  resetForm(form: FormGroup = null) {
+    if (form) {
+     this.form.reset();
+    }
+  }
+
 }

@@ -13,8 +13,8 @@
                   [class.invalid]="!form.get('position').valid && form.get('position').touched"
                   placeholder="Position"
                 />
-                form.controls.position.errors {{ getForm() }}
-                  <div *ngIf="isDisplayError('position', 'required')">
+
+                <div *ngIf="isDisplayError('position', 'required')">
                     <p class="invalid">Field required</p>
                   </div>
                   <div *ngIf="isDisplayError('position', 'minlength')">
@@ -62,12 +62,15 @@
                 <input
                 formControlName="email"
                 type="email"
-                class="form-control validate"
+                class="form-control"
                 placeholder="Email"
                 [class.invalid]="!form.get('email').valid && form.get('email').touched"
                 />
                   <div *ngIf="isDisplayError('email', 'required')">
                     <p class="invalid">Field required</p>
+                  </div>
+                  <div *ngIf="isDisplayError('email', 'email')">
+                    <p class="invalid">Wrong email</p>
                   </div>
                   <div *ngIf="isDisplayError('email', 'maxlength')">
                     <p class="invalid">Maximum 20 characters</p>
@@ -103,10 +106,10 @@
                   <p class="invalid">Maximum 20 characters</p>
                 </div>
               </div>
-              <div class="card-action">
+              <div>
                 <div class="input-field col s12">
-                  <button type="button" class="btn right" style="margin-left: 2px;" [disabled]="!form.valid">Save</button>
-                  <button type="button" class="btn right">Clean</button>
+                  <button type="submit" class="btn right" style="margin-left: 2px;" [disabled]="!form.valid">Save</button>
+                  <button type="button" class="btn right" (click)="resetForm(form)">Clean</button>
                 </div>
               </div>
             </div>
