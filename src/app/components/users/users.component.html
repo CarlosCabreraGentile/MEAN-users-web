@@ -1,122 +1,118 @@
 <div class="container">
   <div class="row">
-    <div class="col s5">
-      <div class="card">
-        <div class="card-content">
-          <form [formGroup]="form" (ngSubmit)="onSave()">
-            <div class="row">
-              <div class="input-field col s12">
-                <input
-                  formControlName="position"
-                  type="text"
-                  class="form-control"
-                  [class.invalid]="!form.get('position').valid && form.get('position').touched"
-                  placeholder="Position"
-                />
+    <div class="col-md-6 offset-md-3 pb-5 bg-white rounded border">
+        <h2 class="mt-4 font-weight-bold">Please enter player info</h2>
+        <hr>
+      <form [formGroup]="form" (ngSubmit)="onSave()">
+          <div class="form-group">
+            <input
+              formControlName="position"
+              type="text"
+              class="form-control"
+              [class.is-invalid]="form.get('position').errors && form.get('position').touched"
+              placeholder="Position"
+            />
 
-                <div *ngIf="isDisplayError('position', 'required')">
-                    <p class="invalid">Field required</p>
-                  </div>
-                  <div *ngIf="isDisplayError('position', 'minlength')">
-                      <p class="invalid">Minimun 4 characters</p>
-                  </div>
-                  <div *ngIf="isDisplayError('position', 'maxlength')">
-                    <p class="invalid">Maximum 10 characters</p>
-                  </div>
-              </div>
-              <div class="input-field col s12">
-                <input
-                formControlName="office"
-                type="text"
-                class="form-control"
-                placeholder="Office"
-                [class.invalid]="!form.get('office').valid && form.get('office').touched"
-                />
-                  <div *ngIf="isDisplayError('office', 'required')">
-                    <p class="invalid">Field required</p>
-                  </div>
-                  <div *ngIf="isDisplayError('office', 'maxlength')">
-                    <p class="invalid">Maximum 20 characters</p>
-                  </div>
-              </div>
-              <div class="input-field col s12">
-                <input
-                [appJustNumber]="true"
-                formControlName="salary"
-                type="text"
-                class="form-control"
-                placeholder="Salary"
-                [class.invalid]="!form.get('salary').valid && form.get('salary').touched"
-                />
-                  <div *ngIf="isDisplayError('salary', 'required')">
-                    <p class="invalid">Field required</p>
-                  </div>
-                  <div *ngIf="isDisplayError('salary', 'pattern')">
-                    <p class="invalid">Wrong numbers</p>
-                  </div>
-                  <div *ngIf="isDisplayError('salary', 'maxlength')">
-                    <p class="invalid">Maximum 4 digits</p>
-                  </div>
-              </div>
-              <div class="input-field col s12">
-                <input
-                formControlName="email"
-                type="email"
-                class="form-control"
-                placeholder="Email"
-                [class.invalid]="!form.get('email').valid && form.get('email').touched"
-                />
-                  <div *ngIf="isDisplayError('email', 'required')">
-                    <p class="invalid">Field required</p>
-                  </div>
-                  <div *ngIf="isDisplayError('email', 'email')">
-                    <p class="invalid">Wrong email</p>
-                  </div>
-                  <div *ngIf="isDisplayError('email', 'maxlength')">
-                    <p class="invalid">Maximum 20 characters</p>
-                  </div>
-              </div>
-                <div class="input-field col s12">
-                  <input
-                    formControlName="firstName"
-                    type="text"
-                    class="form-control"
-                    placeholder="First Name"
-                    [class.invalid]="!form.get('firstName').valid && form.get('firstName').touched"
-                  />
-                  <div *ngIf="isDisplayError('firstName', 'required')">
-                    <p class="invalid">Field required</p>
-                  </div>
-                  <div *ngIf="isDisplayError('firstName', 'maxlength')">
-                    <p class="invalid">Maximum 20 characters</p>
-                  </div>
-              </div>
-              <div class="input-field col s12">
-                <input
-                  formControlName="lastName"
-                  type="text"
-                  class="form-control"
-                  placeholder="Last Name"
-                  [class.invalid]="!form.get('lastName').valid && form.get('lastName').touched"
-                />
-                <div *ngIf="isDisplayError('lastName', 'required')">
-                  <p class="invalid">Field required</p>
-                </div>
-                <div *ngIf="isDisplayError('lastName', 'maxlength')">
-                  <p class="invalid">Maximum 20 characters</p>
-                </div>
-              </div>
-              <div>
-                <div class="input-field col s12">
-                  <button type="submit" class="btn right" style="margin-left: 2px;" [disabled]="!form.valid">Save</button>
-                  <button type="button" class="btn right" (click)="resetForm(form)">Clean</button>
-                </div>
-              </div>
+            <div *ngIf="isDisplayError('position', 'required')" class="invalid-feedback">
+              Field required
             </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col s7"></div>
+            <div *ngIf="isDisplayError('position', 'minlength')" class="invalid-feedback">
+                Minimun 4 characters
+            </div>
+            <div *ngIf="isDisplayError('position', 'maxlength')" class="invalid-feedback">
+              Maximum 10 characters
+            </div>
+          </div>
+          <div class="form-group">
+            <input
+            formControlName="office"
+            type="text"
+            class="form-control"
+            placeholder="Office"
+             [class.is-invalid]="form.get('office').errors && form.get('office').touched"
+            />
+              <div *ngIf="isDisplayError('office', 'required')" class="invalid-feedback">
+                Field required
+              </div>
+              <div *ngIf="isDisplayError('office', 'maxlength')" class="invalid-feedback">
+                Maximum 20 characters
+              </div>
+          </div>
+          <div class="form-group">
+            <input
+            [appJustNumber]="true"
+            formControlName="salary"
+            type="text"
+            class="form-control"
+            placeholder="Salary"
+             [class.is-invalid]="form.get('salary').errors && form.get('salary').touched"
+            />
+              <div *ngIf="isDisplayError('salary', 'required')">
+                Field required
+              </div>
+              <div *ngIf="isDisplayError('salary', 'pattern')">
+                Wrong numbers
+              </div>
+              <div *ngIf="isDisplayError('salary', 'maxlength')">
+                Maximum 4 digits
+              </div>
+          </div>
+          <div class="form-group">
+            <input
+            formControlName="email"
+            type="email"
+            class="form-control"
+            placeholder="Email"
+             [class.is-invalid]="form.get('email').errors && form.get('email').touched"
+            />
+              <div *ngIf="isDisplayError('email', 'required')">
+                Field required
+              </div>
+              <div *ngIf="isDisplayError('email', 'email')">
+                Wrong email
+              </div>
+              <div *ngIf="isDisplayError('email', 'maxlength')">
+                Maximum 20 characters
+              </div>
+          </div>
+            <div class="form-group">
+              <input
+                formControlName="firstName"
+                type="text"
+                class="form-control"
+                placeholder="First Name"
+                 [class.is-invalid]="form.get('firstName').errors && form.get('firstName').touched"
+              />
+              <div *ngIf="isDisplayError('firstName', 'required')">
+                Field required
+              </div>
+              <div *ngIf="isDisplayError('firstName', 'maxlength')">
+                Maximum 20 characters
+              </div>
+          </div>
+          <div class="form-group">
+            <input
+              formControlName="lastName"
+              type="text"
+              class="form-control"
+              placeholder="Last Name"
+               [class.is-invalid]="form.get('lastName').errors && form.get('lastName').touched"
+            />
+            <div *ngIf="isDisplayError('lastName', 'required')">
+              Field required
+            </div>
+            <div *ngIf="isDisplayError('lastName', 'maxlength')">
+              Maximum 20 characters
+            </div>
+          </div>
+          <div>
+            <div class="input-field col s12">
+              <button type="button" class="btn btn-primary" (click)="resetForm(form)">Clean</button>
+              <button type="submit" class="btn btn-primary" style="margin-left: 2px;" [disabled]="!form.valid">Save</button>
+            </div>
+          </div>
+      </form>
+  </div>
   </div>
 </div>
+

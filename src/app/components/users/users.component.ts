@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef  } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 import { NumberValidatorService } from '../../services/number-validator.service';
 import { Users } from '../../models/users';
@@ -28,6 +29,7 @@ export class UsersComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
+    private toastrService: ToastrService,
     private el: ElementRef
   ) {
     this.id = this.route.snapshot.params.id;
@@ -145,6 +147,7 @@ export class UsersComponent implements OnInit {
     this.userService.postUser(this.form.value)
       .subscribe((data) => {
         subject.next(data);
+        this.toastrService.success('User Saved');
         console.log(data);
         },
         error => subject.error(error),
