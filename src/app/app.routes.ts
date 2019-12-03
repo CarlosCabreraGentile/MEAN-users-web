@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { MainLayoutComponent } from '../app/components/main-layout/main-layout.component';
 import { UsersComponent } from './components/users/users.component';
+import { UsersListComponent } from './components/users-list/users-list.component';
 
 export const routes: Routes = [
     {
@@ -11,14 +12,14 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: '/user/create',
+                redirectTo: '/user/list',
                 pathMatch: 'full',
             },
-            // {
-            //     path: 'home',
-            //     redirectTo: '/players',
-            //     pathMatch: 'full',
-            // },
+            {
+                path: 'user/list',
+                component: UsersListComponent,
+                pathMatch: 'full',
+            },
             {
                 path: 'user/create',
                 component: UsersComponent

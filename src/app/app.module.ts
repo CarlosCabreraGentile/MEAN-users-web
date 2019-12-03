@@ -10,21 +10,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routes';
 import { ToastrModule } from 'ngx-toastr';
-import { UsersComponent } from './components/users/users.component';
 import { ApiService } from './services/api.service';
-import { UserService } from './services/user.service';
 import { HelperService } from './services/helper.service';
 import { JustNumberDirective } from './shared/just-number.directive';
+import { UserService } from './services/user.service';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { UsersComponent } from './components/users/users.component';
 import { UsersListComponent } from './components/users-list/users-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
+    UsersListComponent,
     JustNumberDirective,
     MainLayoutComponent,
-    UsersListComponent
   ],
   imports: [
     BrowserModule,

@@ -94,9 +94,9 @@ export class UsersComponent implements OnInit {
     });
     console.log(this.form);
   }
-  getForm() {
-    console.log(this.form.get("salary"));
-  }
+  // getForm() {
+  //   console.log(this.form.get("salary"));
+  // }
 
   /**
    * Return true if error message should be displayed

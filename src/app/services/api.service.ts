@@ -38,7 +38,7 @@ httpGet(endpoint: string) {
     return this.http
     .get(this.baseUrl + endpoint, { headers: HelperService.getHttpHeaders() })
     .pipe(
-      map((response: any) => response.json()),
+      map(res => res),
       catchError(this.handleError)
     );
 }
