@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Routing module
 import { AppComponent } from './app.component';
@@ -31,6 +32,7 @@ import { UsersListComponent } from './components/users-list/users-list.component
     FormsModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
+    NgbModule,
     ReactiveFormsModule,
     HttpClientModule,
     HttpModule,

@@ -81,7 +81,7 @@ export class UserService {
    * @param user
    * @returns {Observable<Users>}
    */
-  public deleteUser(id: number): Observable<Users> {
+  public deleteUser(id: string): Observable<Users> {
     return this.apiService.httpDelete(`/user/${id}`);
   }
 

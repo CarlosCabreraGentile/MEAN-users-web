@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 import { NumberValidatorService } from '../../services/number-validator.service';
-import { Users } from '../../models/users';
+import { Users } from '../../models/users.interface';
 import { Subject, Observable } from 'rxjs';
 
 @Component({
@@ -17,6 +17,8 @@ export class UsersComponent implements OnInit {
   user: any = {};
   form: FormGroup;
   id: string = null;
+  cancelButton = false;
+
   /**
    * allow the number 0 to be valid by itself
    * but still invalid when in front of other numbers
@@ -38,6 +40,7 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     // If there is an id, get specific player
     if (this.id) {
+      this.cancelButton = true;
       this.userService.getUser(this.id).subscribe(
         (data: Users) => {
           this.user = data;
@@ -92,11 +95,12 @@ export class UsersComponent implements OnInit {
         Validators.compose([Validators.required, Validators.maxLength(10)])
       ]
     });
-    console.log(this.form);
+    // console.log(this.form);
   }
-  // getForm() {
-  //   console.log(this.form.get("salary"));
-  // }
+
+  getForm() {
+   console.log(this.form.get('position'));
+  }
 
   /**
    * Return true if error message should be displayed
@@ -115,6 +119,13 @@ export class UsersComponent implements OnInit {
   }
 
   /**
+   * Cancel action and redirect to home
+   */
+  onCancel() {
+    this.router.navigate(['home']);
+  }
+
+  /**
    * Submit the form with player info
    * @returns {void}
    */
@@ -123,18 +134,24 @@ export class UsersComponent implements OnInit {
     if (!this.id) {
       this.createUser()
       .subscribe(
-        () => {
+        (data: any) => {
           this.form.reset();
-          // this.router.navigate(['home']);
-      });
+          this.router.navigate(['home']);
+        },
+        (err: any) => {
+          console.log(err);
+        }
+        );
     } else {
       // If a there is an id, edit user
       this.editUser()
-      .subscribe(
-        () => {
+      .subscribe(() => {
           this.form.reset();
-          // this.router.navigate(['home']);
-      });
+          this.router.navigate(['home']);
+        },
+        (err: any) => {
+          console.log(err);
+        });
     }
   }
 
@@ -157,7 +174,7 @@ export class UsersComponent implements OnInit {
   }
 
   /**
-   * Edit player
+   * Edit user
    * @returns {Observable<void>}
    */
   private editUser(): Observable<void> {

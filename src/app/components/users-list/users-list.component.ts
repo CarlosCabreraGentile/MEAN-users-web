@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { UserService } from '../../services/user.service';
 import { Users } from '../../models/users.interface';
@@ -11,10 +12,13 @@ import { Users } from '../../models/users.interface';
 })
 export class UsersListComponent implements OnInit {
 users: Users[] = [];
+selectedUser: Users;
+userToDelete = false;
 
   constructor(
     private userService: UserService,
     private router: Router,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -22,7 +26,6 @@ users: Users[] = [];
     .subscribe(
       (users: Users[]) => {
         this.users = users;
-        console.log(users);
       },
       (err: any) => {
         console.error(err);
@@ -30,16 +33,40 @@ users: Users[] = [];
     );
   }
 
-  createPlayer() {
+  createUser() {
     this.router.navigate(['user/create']);
   }
 
-  detailUser(id: string) {
-    console.log(id);
+  deleteUser(id: string) {
+    this.userService.deleteUser(id)
+      .subscribe(
+        (user: Users) => {
+          console.log(user);
+        },
+        (err: any) => {
+          console.error(err);
+        }
+      );
   }
 
-  editUser(id: string) {
-    console.log(id);
+  onDetailUser(content, user, event) {
+    this.selectedUser = user;
+    // This function prevent cascade clic function
+    event.stopPropagation();
+    this.modalService.open(content, { centered: true });
+  }
+
+  onEditUser(id: string, event) {
+    // This function prevent cascade clic function
+    event.stopPropagation();
+    this.router.navigate([`user/edit/${id}`]);
+  }
+
+  onDelete(content, user, event) {
+    this.selectedUser = user;
+    // This function prevent cascade clic function
+    event.stopPropagation();
+    this.modalService.open(content, { centered: true, size: 'sm' });
   }
 
 }

@@ -1,18 +1,18 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6 offset-md-3 pb-5 bg-white rounded border">
+    <div class="col-md-4 offset-md-4 pb-5 bg-white rounded border">
         <h2 class="mt-4 font-weight-bold">Please enter user info</h2>
         <hr>
-      <form [formGroup]="form" (ngSubmit)="onSave()">
+      <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSave()">
           <div class="form-group">
+            <label for="position">Position</label>
             <input
               formControlName="position"
               type="text"
               class="form-control"
-              [class.is-invalid]="form.get('position').errors && form.get('position').touched"
-              placeholder="Position"
+              [class.is-invalid]="!form.get('position').valid && (form.get('position').touched || form.get('position').dirty)"
+              placeholder="Developer"
             />
-
             <div *ngIf="isDisplayError('position', 'required')" class="invalid-feedback">
               Field required
             </div>
@@ -24,12 +24,13 @@
             </div>
           </div>
           <div class="form-group">
+            <label for="office">Office</label>
             <input
             formControlName="office"
             type="text"
             class="form-control"
-            placeholder="Office"
-             [class.is-invalid]="form.get('office').errors && form.get('office').touched"
+            placeholder="Los Angeles"
+             [class.is-invalid]="!form.get('office').valid && (form.get('office').touched || form.get('office').dirty)"
             />
               <div *ngIf="isDisplayError('office', 'required')" class="invalid-feedback">
                 Field required
@@ -39,77 +40,80 @@
               </div>
           </div>
           <div class="form-group">
+            <label for="salary">Salary</label>
             <input
             [appJustNumber]="true"
             formControlName="salary"
             type="text"
             class="form-control"
-            placeholder="Salary"
-             [class.is-invalid]="form.get('salary').errors && form.get('salary').touched"
+            placeholder="10000"
+             [class.is-invalid]="!form.get('salary').valid && (form.get('salary').touched || form.get('salary').dirty)"
             />
-              <div *ngIf="isDisplayError('salary', 'required')">
+              <div *ngIf="isDisplayError('salary', 'required')" class="invalid-feedback">
                 Field required
               </div>
-              <div *ngIf="isDisplayError('salary', 'pattern')">
+              <div *ngIf="isDisplayError('salary', 'pattern')" class="invalid-feedback">
                 Wrong numbers
               </div>
-              <div *ngIf="isDisplayError('salary', 'maxlength')">
-                Maximum 4 digits
+              <div *ngIf="isDisplayError('salary', 'maxlength')" class="invalid-feedback">
+                Maximum 6 digits
               </div>
           </div>
           <div class="form-group">
+            <label for="email">E-mail</label>
             <input
             formControlName="email"
             type="email"
             class="form-control"
-            placeholder="Email"
-             [class.is-invalid]="form.get('email').errors && form.get('email').touched"
+            placeholder="example@example.com"
+             [class.is-invalid]="!form.get('email').valid && (form.get('email').touched || form.get('email').dirty)"
             />
-              <div *ngIf="isDisplayError('email', 'required')">
+              <div *ngIf="isDisplayError('email', 'required')" class="invalid-feedback">
                 Field required
               </div>
-              <div *ngIf="isDisplayError('email', 'email')">
+              <div *ngIf="isDisplayError('email', 'email')" class="invalid-feedback">
                 Wrong email
               </div>
-              <div *ngIf="isDisplayError('email', 'maxlength')">
+              <div *ngIf="isDisplayError('email', 'maxlength')" class="invalid-feedback">
                 Maximum 20 characters
               </div>
           </div>
             <div class="form-group">
+              <label for="name">Name</label>
               <input
                 formControlName="firstName"
                 type="text"
                 class="form-control"
-                placeholder="First Name"
-                 [class.is-invalid]="form.get('firstName').errors && form.get('firstName').touched"
+                placeholder="John"
+                 [class.is-invalid]="!form.get('firstName').valid && (form.get('firstName').touched || form.get('firstName').dirty)"
               />
-              <div *ngIf="isDisplayError('firstName', 'required')">
+              <div *ngIf="isDisplayError('firstName', 'required')" class="invalid-feedback">
                 Field required
               </div>
-              <div *ngIf="isDisplayError('firstName', 'maxlength')">
+              <div *ngIf="isDisplayError('firstName', 'maxlength')" class="invalid-feedback">
                 Maximum 20 characters
               </div>
           </div>
           <div class="form-group">
+            <label for="lastName">Lastname</label>
             <input
               formControlName="lastName"
               type="text"
               class="form-control"
-              placeholder="Last Name"
-               [class.is-invalid]="form.get('lastName').errors && form.get('lastName').touched"
+              placeholder="Doe"
+               [class.is-invalid]="!form.get('lastName').valid && (form.get('lastName').touched || form.get('lastName').dirty)"
             />
-            <div *ngIf="isDisplayError('lastName', 'required')">
+            <div *ngIf="isDisplayError('lastName', 'required')" class="invalid-feedback">
               Field required
             </div>
-            <div *ngIf="isDisplayError('lastName', 'maxlength')">
+            <div *ngIf="isDisplayError('lastName', 'maxlength')" class="invalid-feedback">
               Maximum 20 characters
             </div>
           </div>
           <div>
-            <div class="input-field col s12">
-              <button type="button" class="btn btn-primary" (click)="resetForm(form)">Clean</button>
-              <button type="submit" class="btn btn-primary" style="margin-left: 2px;" [disabled]="!form.valid">Save</button>
-            </div>
+            <button *ngIf="cancelButton" type="button" class="btn btn-primary" (click)="onCancel()">Cancel</button>
+            <button *ngIf="!cancelButton" type="button" class="btn btn-primary" (click)="resetForm(form)">Clean</button>
+            <button type="submit" class="btn btn-primary" style="margin-left: 2px;" [disabled]="!form.valid" (click)="onSave()">Save</button>
           </div>
       </form>
   </div>

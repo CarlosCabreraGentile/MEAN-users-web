@@ -16,6 +16,11 @@ export const routes: Routes = [
                 pathMatch: 'full',
             },
             {
+              path: 'home',
+              redirectTo: '/user/list',
+              pathMatch: 'full',
+          },
+            {
                 path: 'user/list',
                 component: UsersListComponent,
                 pathMatch: 'full',
@@ -24,6 +29,10 @@ export const routes: Routes = [
                 path: 'user/create',
                 component: UsersComponent
             },
+            {
+              path: 'user/edit/:id',
+              component: UsersComponent
+          },
             // {
             //     path: 'user/detail/:id',
             //     component: DetailPlayerComponent

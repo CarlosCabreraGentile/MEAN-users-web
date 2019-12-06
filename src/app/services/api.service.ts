@@ -86,7 +86,7 @@ httpPut(endpoint, dataPost, uploadFile: boolean = false): Observable<any> {
 // this.http.put(this.baseUrl + endpoint, json, { "headers": new Headers({ "Content-Type": "application/json" }) })
   this.http.put(this.baseUrl + endpoint, json, { headers: HelperService.getHttpHeaders() })
     .pipe(
-      map((response: any) => response.json()),
+      map(res => res),
       catchError(this.handleError)
     )
     .subscribe(
@@ -108,7 +108,7 @@ httpDelete(endpoint, uploadFile: boolean = false): Observable<any> {
 
   this.http.delete(this.baseUrl + endpoint, { headers: HelperService.getHttpHeaders() })
     .pipe(
-      map((response: any) => response.json()),
+      map(res => res),
       catchError(this.handleError)
     )
     .subscribe(
