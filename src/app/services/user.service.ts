@@ -61,8 +61,22 @@ export class UserService {
    * Create a new user
    * @returns {Observable<Users>}
    */
-  public postUser(user: Users): Observable<Users[]> {
-    return this.apiService.httpPost('/user', user);
+  public postUser(user: Users): Observable<Users> {
+    const subject = new Subject<any>();
+    this.apiService.httpPost('/user', user)
+    .subscribe(
+      (data: any) => {
+        subject.next(data);
+      },
+      (err: any) => {
+        subject.error(err);
+      },
+      () => {
+        subject.complete();
+      }
+    );
+
+    return subject.asObservable();
   }
 
   /**
@@ -72,7 +86,22 @@ export class UserService {
    * @returns {Observable<Users>}
    */
   public putUser(id: string, user: Users): Observable<Users> {
-    return this.apiService.httpPut(`/user/${id}`, user);
+    const subject = new Subject<any>();
+
+    this.apiService.httpPut(`/user/${id}`, user)
+    .subscribe(
+      (data: any) => {
+        subject.next(data);
+      },
+      (err: any) => {
+        subject.error(err);
+      },
+      () => {
+        subject.complete();
+      }
+    );
+
+    return subject.asObservable();
   }
 
   /**
@@ -82,7 +111,22 @@ export class UserService {
    * @returns {Observable<Users>}
    */
   public deleteUser(id: string): Observable<Users> {
-    return this.apiService.httpDelete(`/user/${id}`);
+    const subject = new Subject<any>();
+
+    this.apiService.httpDelete(`/user/${id}`)
+    .subscribe(
+      (data: any) => {
+        subject.next(data);
+      },
+      (err: any) => {
+        subject.error(err);
+      },
+      () => {
+        subject.complete();
+      }
+    );
+
+    return subject.asObservable();
   }
 
 }

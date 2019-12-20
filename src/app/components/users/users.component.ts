@@ -17,6 +17,7 @@ export class UsersComponent implements OnInit {
   user: any = {};
   form: FormGroup;
   id: string = null;
+  emailDuplicated: string = null;
   cancelButton = false;
 
   /**
@@ -118,6 +119,14 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  checkDuplicateEmail(err: any) {
+    if (err) {
+      this.emailDuplicated = err.error.msg;
+      const controlName = 'email';
+      this.form.controls[controlName].setErrors({msg: this.emailDuplicated});
+    }
+  }
+
   /**
    * Cancel action and redirect to home
    */
@@ -139,7 +148,7 @@ export class UsersComponent implements OnInit {
           this.router.navigate(['home']);
         },
         (err: any) => {
-          console.log(err);
+          this.checkDuplicateEmail(err);
         }
         );
     } else {
@@ -150,6 +159,7 @@ export class UsersComponent implements OnInit {
           this.router.navigate(['home']);
         },
         (err: any) => {
+          this.checkDuplicateEmail(err);
           console.log(err);
         });
     }
@@ -162,12 +172,12 @@ export class UsersComponent implements OnInit {
   private createUser(): Observable<void> {
     const subject = new Subject<any>();
     this.userService.postUser(this.form.value)
-      .subscribe((data) => {
-        subject.next(data);
-        this.toastrService.success('User Saved');
-        console.log(data);
+      .subscribe(
+        (data) => {
+          subject.next(data);
+          this.toastrService.success('User Saved');
         },
-        error => subject.error(error),
+        (error: any) => subject.error(error),
         () => subject.complete()
     );
     return subject.asObservable();
@@ -182,7 +192,7 @@ export class UsersComponent implements OnInit {
     this.userService.putUser(this.id, this.form.value)
       .subscribe(
         () => subject.next(),
-        error => subject.error(error),
+        (error: any) => subject.error(error),
         () => subject.complete()
     );
     return subject.asObservable();

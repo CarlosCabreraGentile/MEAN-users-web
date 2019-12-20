@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainLayoutComponent } from '../app/components/main-layout/main-layout.component';
 import { UsersComponent } from './components/users/users.component';
 import { UsersListComponent } from './components/users-list/users-list.component';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
     {
@@ -19,7 +20,11 @@ export const routes: Routes = [
               path: 'home',
               redirectTo: '/user/list',
               pathMatch: 'full',
-          },
+            },
+            {
+              path: 'login',
+              component: LoginComponent,
+            },
             {
                 path: 'user/list',
                 component: UsersListComponent,

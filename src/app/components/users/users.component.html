@@ -3,7 +3,7 @@
     <div class="col-md-4 offset-md-4 pb-5 bg-white rounded border">
         <h2 class="mt-4 font-weight-bold">Please enter user info</h2>
         <hr>
-      <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSave()">
+      <form *ngIf="form" [formGroup]="form">
           <div class="form-group">
             <label for="position">Position</label>
             <input
@@ -77,6 +77,9 @@
               <div *ngIf="isDisplayError('email', 'maxlength')" class="invalid-feedback">
                 Maximum 20 characters
               </div>
+              <div *ngIf="isDisplayError('email', 'msg')" class="invalid-feedback">
+                {{emailDuplicated}}
+              </div>
           </div>
             <div class="form-group">
               <label for="name">Name</label>
@@ -119,4 +122,3 @@
   </div>
   </div>
 </div>
-

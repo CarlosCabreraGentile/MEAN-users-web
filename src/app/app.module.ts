@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Routing module
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routes';
+import { AppComponent } from './app.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ApiService } from './services/api.service';
 import { HelperService } from './services/helper.service';
@@ -18,6 +18,7 @@ import { UserService } from './services/user.service';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 import { UsersComponent } from './components/users/users.component';
 import { UsersListComponent } from './components/users-list/users-list.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { UsersListComponent } from './components/users-list/users-list.component
     UsersListComponent,
     JustNumberDirective,
     MainLayoutComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

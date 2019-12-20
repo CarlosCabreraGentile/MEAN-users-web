@@ -24,7 +24,6 @@ constructor(private http: HttpClient) {
  * @returns {Observable<R>}
  */
 httpGet(endpoint: string) {
-    const subject = new Subject<any>();
 
     // Add timestamp to avoid cache
     if (endpoint.indexOf('?') >= 0) {
@@ -36,11 +35,11 @@ httpGet(endpoint: string) {
     endpoint += '_t=' + timestamp;
 
     return this.http
-    .get(this.baseUrl + endpoint, { headers: HelperService.getHttpHeaders() })
-    .pipe(
-      map(res => res),
-      catchError(this.handleError)
-    );
+      .get(this.baseUrl + endpoint, { headers: HelperService.getHttpHeaders() })
+        .pipe(
+          map(res => res),
+          catchError(this.handleError)
+        );
 }
 
 /**
@@ -50,24 +49,17 @@ httpGet(endpoint: string) {
  * @returns {Observable<R>}
  */
 httpPost(endpoint, dataPost, uploadFile = false): Observable<any> {
-  const subject = new Subject<any>();
   let json = null;
 
   if (dataPost) {
     json = JSON.stringify(dataPost);
   }
 
-  this.http.post(this.baseUrl + endpoint, json, { headers: HelperService.getHttpHeaders() })
+  return this.http.post(this.baseUrl + endpoint, json, { headers: HelperService.getHttpHeaders() })
     .pipe(
       map(res => res),
       catchError(this.handleError)
-    )
-    .subscribe(
-      res => subject.next(res),
-      err => subject.error(err),
-      () => subject.complete()
     );
-  return subject.asObservable();
 }
 
 /**
@@ -77,24 +69,17 @@ httpPost(endpoint, dataPost, uploadFile = false): Observable<any> {
  * @returns {Observable<R>}
  */
 httpPut(endpoint, dataPost, uploadFile: boolean = false): Observable<any> {
-  const subject = new Subject<any>();
   let json = null;
 
   if (dataPost) {
     json = JSON.stringify(dataPost);
   }
-// this.http.put(this.baseUrl + endpoint, json, { "headers": new Headers({ "Content-Type": "application/json" }) })
-  this.http.put(this.baseUrl + endpoint, json, { headers: HelperService.getHttpHeaders() })
+// return this.http.put(this.baseUrl + endpoint, json, { "headers": new Headers({ "Content-Type": "application/json" }) })
+  return this.http.put(this.baseUrl + endpoint, json, { headers: HelperService.getHttpHeaders() })
     .pipe(
       map(res => res),
       catchError(this.handleError)
-    )
-    .subscribe(
-      res => subject.next(res),
-      err => subject.error(err),
-      () => subject.complete()
     );
-  return subject.asObservable();
 }
 
 /**
@@ -104,19 +89,12 @@ httpPut(endpoint, dataPost, uploadFile: boolean = false): Observable<any> {
  * @returns {Observable<R>}
  */
 httpDelete(endpoint, uploadFile: boolean = false): Observable<any> {
-  const subject = new Subject<any>();
 
-  this.http.delete(this.baseUrl + endpoint, { headers: HelperService.getHttpHeaders() })
+  return this.http.delete(this.baseUrl + endpoint, { headers: HelperService.getHttpHeaders() })
     .pipe(
       map(res => res),
       catchError(this.handleError)
-    )
-    .subscribe(
-      res => subject.next(res),
-      err => subject.error(err),
-      () => subject.complete()
     );
-  return subject.asObservable();
 }
 
 /**
@@ -125,7 +103,6 @@ httpDelete(endpoint, uploadFile: boolean = false): Observable<any> {
  * @returns {any}
  */
 private handleError(error: any) {
-  console.error(error);
-  return throwError(error.json() || 'Server error');
+  return throwError(error || 'Server error');
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 import { Users } from '../../models/users.interface';
 
@@ -18,7 +19,8 @@ userToDelete = false;
   constructor(
     private userService: UserService,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastrService: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -33,15 +35,17 @@ userToDelete = false;
     );
   }
 
-  createUser() {
+  createNewUser() {
     this.router.navigate(['user/create']);
   }
 
   deleteUser(id: string) {
     this.userService.deleteUser(id)
       .subscribe(
-        (user: Users) => {
-          console.log(user);
+        (data: any) => {
+          this.router.navigate(['user/create']);
+          this.toastrService.info(data.msg, '' , { toastClass: 'ngx-toastr toast-info-error' });
+          // location.reload();
         },
         (err: any) => {
           console.error(err);
