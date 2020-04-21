@@ -18,12 +18,7 @@ constructor(private http: HttpClient) {
   this.baseUrl = environment.api.baseUrl;
 }
 
-/**
- * HTTP Get
- * @param res
- * @returns {Observable<R>}
- */
-httpGet(endpoint: string) {
+httpGet(endpoint: string): Observable<any> {
 
     // Add timestamp to avoid cache
     if (endpoint.indexOf('?') >= 0) {
@@ -42,12 +37,6 @@ httpGet(endpoint: string) {
         );
 }
 
-/**
- * HTTP Post
- * @param endpoint
- * @param dataPost
- * @returns {Observable<R>}
- */
 httpPost(endpoint, dataPost, uploadFile = false): Observable<any> {
   let json = null;
 
@@ -62,12 +51,6 @@ httpPost(endpoint, dataPost, uploadFile = false): Observable<any> {
     );
 }
 
-/**
- * HTTP Put
- * @param endpoint
- * @param dataPost
- * @returns {Observable<R>}
- */
 httpPut(endpoint, dataPost, uploadFile: boolean = false): Observable<any> {
   let json = null;
 
@@ -82,14 +65,7 @@ httpPut(endpoint, dataPost, uploadFile: boolean = false): Observable<any> {
     );
 }
 
-/**
- * HTTP Delete
- * @param endpoint
- * @param dataPost
- * @returns {Observable<R>}
- */
 httpDelete(endpoint, uploadFile: boolean = false): Observable<any> {
-
   return this.http.delete(this.baseUrl + endpoint, { headers: HelperService.getHttpHeaders() })
     .pipe(
       map(res => res),
@@ -97,11 +73,6 @@ httpDelete(endpoint, uploadFile: boolean = false): Observable<any> {
     );
 }
 
-/**
- * Handle error
- * @param error
- * @returns {any}
- */
 private handleError(error: any) {
   return throwError(error || 'Server error');
   }
